@@ -42,11 +42,6 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Deshabilitar smooth scroll solo en Android */
-.perf-mode html {
-    scroll-behavior: auto;
-}
-
 /* Fix para estabilidad de renderizado en móviles/Android */
 .glass-card,
 .topic-card,
@@ -210,13 +205,13 @@ body::before {
 
 @media (max-width: 768px) {
     .orb {
-        animation: none !important;
-        opacity: 0.15;
+        animation: float 25s infinite ease-in-out alternate !important;
+        opacity: 0.2;
     }
 
     body::before {
-        animation: none !important;
-        opacity: 0.03;
+        animation: noiseMove 8s steps(10) infinite !important;
+        opacity: 0.04;
     }
 }
 
@@ -502,15 +497,21 @@ header {
     contain-intrinsic-size: auto 500px;
 }
 
-.perf-mode .topic-card:hover,
-.perf-mode .glass-card:hover,
+.perf-mode .topic-card:hover {
+    transform: translateY(-5px) scale(1.01) !important;
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2) !important;
+}
+
+.perf-mode .glass-card:hover {
+    transform: translateY(-2px) !important;
+}
+
 .perf-mode .module-accordion:hover {
-    transform: none !important;
-    box-shadow: none !important;
+    border-color: rgba(37, 99, 235, 0.3) !important;
 }
 
 .perf-mode button:active {
-    transform: none !important;
+    transform: scale(0.97) !important;
 }
 
 .perf-mode .uiverse {
@@ -524,9 +525,12 @@ header {
 .perf-mode .topic-card,
 .perf-mode .topic-btn,
 .perf-mode .exam-option,
-.perf-mode .nav-links a,
+.perf-mode .nav-links a {
+    transition: all 0.2s ease !important;
+}
+
 .perf-mode .topic-icon {
-    transition: none !important;
+    transition: transform 0.3s ease !important;
 }
 
 .glass-card::after {
