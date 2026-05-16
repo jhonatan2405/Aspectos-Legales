@@ -496,6 +496,12 @@ header {
     will-change: auto;
 }
 
+/* Content visibility para lazy loading en Android */
+.perf-mode section:not(#hero) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
+}
+
 .perf-mode .topic-card:hover,
 .perf-mode .glass-card:hover,
 .perf-mode .module-accordion:hover {
