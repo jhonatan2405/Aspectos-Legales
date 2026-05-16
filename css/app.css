@@ -92,12 +92,27 @@ body::before {
     position: absolute;
     border-radius: 50%;
     opacity: 0.3;
-    animation: float 20s infinite ease-in-out alternate;
+    animation: float 25s infinite ease-in-out alternate;
     will-change: transform;
 }
+
 .orb-1 { width: 60vw; height: 60vw; background: radial-gradient(circle, var(--accent-blue) 0%, transparent 60%); top: -20vw; left: -20vw; }
 .orb-2 { width: 50vw; height: 50vw; background: radial-gradient(circle, var(--accent-violet) 0%, transparent 60%); bottom: -20vw; right: -20vw; animation-delay: -5s; }
 .orb-3 { width: 45vw; height: 45vw; background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 60%); top: 30%; left: 40%; animation-delay: -10s; }
+
+@media (max-width: 768px) {
+    .orb { 
+        animation-duration: 45s; /* Ralentizar para ahorrar GPU */
+        opacity: 0.2;
+    }
+    body::before { 
+        animation: none; /* El ruido estático ahorra muchísimo procesamiento */
+        opacity: 0.04;
+    }
+    .topic-nav, .glass-card {
+        backdrop-filter: blur(8px); /* Reducir de 20px a 8px para fluidez */
+    }
+}
 
 @keyframes float {
     0% { transform: translate(0, 0) scale(1) rotate(0deg); }
@@ -578,7 +593,7 @@ button:active { transform: scale(0.97); }
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s, color 0.3s, box-shadow 0.3s;
     white-space: nowrap;
     position: relative;
 }
