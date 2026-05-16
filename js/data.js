@@ -1,196 +1,372 @@
 const modulesData = [
     {
         id: 'A', title: 'Módulo A: Ética y Moral',
-        content: `
-            <p>La ética es una rama de la filosofía que estudia qué acciones son correctas o incorrectas. Su función es ayudarnos a reflexionar sobre cómo debemos actuar en diferentes situaciones de la vida personal y profesional.</p>
-            
-            <div class="highlight-cyan">
-                <strong>Ejemplo sencillo:</strong> Un ingeniero descubre que los materiales usados en una construcción son de mala calidad. Aunque reportarlo pueda retrasar el proyecto, la ética indica que debe informar el problema para proteger la vida y la seguridad de las personas.
-            </div>
-
-            <div class="study-tip">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.989-2.386l-.548-.547z"/></svg>
-                <span><strong>Tip:</strong> Piensa en la Ética como el "Manual de instrucciones" y en la Moral como "Seguir las reglas en el juego diario".</span>
-            </div>
-
-            <h3 style="margin: 1.5rem 0 1rem;">Diferencia entre Ética y Moral</h3>
-            <div class="table-scroll">
-                <table class="glass-table">
-                    <thead>
-                        <tr><th>Ética</th><th>Moral</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Es teórica (estudia el "por qué")</td><td>Es práctica (indica "cómo actuar")</td></tr>
-                        <tr><td>Analiza y reflexiona</td><td>Aplica reglas en la vida diaria</td></tr>
-                        <tr><td>Estudia principios y valores</td><td>Son normas y costumbres sociales</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3 style="margin: 1.5rem 0 1rem;">Valores Fundamentales del Profesional</h3>
-            <ul class="value-grid">
-                <li>✨ <strong>Honestidad:</strong> Sinceridad y verdad.</li>
-                <li>✨ <strong>Responsabilidad:</strong> Asumir consecuencias.</li>
-                <li>✨ <strong>Integridad:</strong> Actuar bien sin ser visto.</li>
-                <li>✨ <strong>Empatía:</strong> Respetar sentimientos.</li>
-                <li>✨ <strong>Solidaridad:</strong> Bienestar común.</li>
-                <li>✨ <strong>Perseverancia:</strong> Esfuerzo constante.</li>
-                <li>✨ <strong>Respeto:</strong> Valorar diferencias.</li>
-                <li>✨ <strong>Altruismo:</strong> Beneficiar sin recompensa.</li>
-                <li>✨ <strong>Prudencia:</strong> Pensar antes de actuar.</li>
-                <li>✨ <strong>Humildad:</strong> Reconocer errores.</li>
-            </ul>
-        `,
+        topics: [
+            {
+                title: '¿Qué es la Ética?',
+                content: `
+                    <p>La ética es una rama de la filosofía que estudia el comportamiento humano y analiza cuáles acciones son correctas o incorrectas. Su propósito es orientar a las personas para actuar de manera responsable, justa y correcta.</p>
+                    <p>La ética no solo se enfoca en las acciones, sino también en las intenciones, las consecuencias y los valores. Proviene del griego <em>ethos</em> ("carácter" o "modo de ser").</p>
+                    <h4 style="margin-top:1rem;">Preguntas clave:</h4>
+                    <ul style="margin-left:1.5rem; margin-bottom:1rem;">
+                        <li>¿Qué es lo correcto?</li>
+                        <li>¿Qué significa actuar bien?</li>
+                        <li>¿Qué responsabilidades tiene un profesional?</li>
+                    </ul>
+                    <div class="study-tip">
+                        <strong>Importancia:</strong> Mejora la convivencia, guía decisiones difíciles, evita injusticias y protege la dignidad humana.
+                    </div>
+                `
+            },
+            {
+                title: 'Tipos de Ética',
+                content: `
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:1rem;">
+                        <div class="glass-card" style="padding:1rem;">
+                            <strong style="color:var(--accent-cyan);">Ética Personal</strong>
+                            <p style="font-size:0.85rem; margin-top:0.5rem;">Guía las decisiones individuales según valores propios. <br><em>Ej: No copiar en un examen aunque nadie vigile.</em></p>
+                        </div>
+                        <div class="glass-card" style="padding:1rem;">
+                            <strong style="color:var(--accent-violet);">Ética Profesional</strong>
+                            <p style="font-size:0.85rem; margin-top:0.5rem;">Aplicación de principios en una profesión. Busca honestidad, transparencia y respeto. <br><em>Ej: Un ingeniero no aprueba una obra insegura.</em></p>
+                        </div>
+                        <div class="glass-card" style="padding:1rem;">
+                            <strong style="color:var(--accent-blue);">Ética Social</strong>
+                            <p style="font-size:0.85rem; margin-top:0.5rem;">Comportamiento adecuado en sociedad y convivencia. <br><em>Ej: Respetar normas de tránsito.</em></p>
+                        </div>
+                    </div>
+                `
+            },
+            {
+                title: '¿Qué es la Moral?',
+                content: `
+                    <p>La moral es el conjunto de normas, costumbres, creencias y valores que una sociedad considera correctos o incorrectos.</p>
+                    <p>Se aprende desde pequeños a través de la familia, la escuela, la cultura, la religión y la sociedad. Influye en la forma de convivir diariamente.</p>
+                    <h4 style="margin-top:1rem;">Ejemplos de normas morales:</h4>
+                    <ul class="value-grid">
+                        <li>🚫 No mentir</li>
+                        <li>🚫 No robar</li>
+                        <li>🤝 Ayudar a quien lo necesita</li>
+                        <li>📜 Cumplir promesas</li>
+                        <li>🙏 Respetar a los demás</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Diferencias y Relación',
+                content: `
+                    <div class="table-scroll">
+                        <table class="glass-table">
+                            <thead><tr><th>Ética</th><th>Moral</th></tr></thead>
+                            <tbody>
+                                <tr><td>Reflexión filosófica</td><td>Normas y costumbres</td></tr>
+                                <tr><td>Analiza qué es correcto</td><td>Indica cómo actuar</td></tr>
+                                <tr><td>Es teórica</td><td>Es práctica</td></tr>
+                                <tr><td>Cuestiona normas</td><td>Sigue reglas aceptadas</td></tr>
+                                <tr><td>Busca justificar acciones</td><td>Busca orientar conductas</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="highlight-cyan" style="margin-top:1rem;">
+                        <strong>Relación:</strong> La ética analiza y cuestiona las normas morales, mientras que la moral las aplica. La ética ayuda a mejorar la moral de una sociedad.
+                    </div>
+                `
+            },
+            {
+                title: 'Valores Fundamentales',
+                content: `
+                    <ul class="value-grid">
+                        <li>✨ <strong>Honestidad:</strong> Sinceridad y verdad.</li>
+                        <li>✨ <strong>Responsabilidad:</strong> Asumir consecuencias.</li>
+                        <li>✨ <strong>Integridad:</strong> Actuar bien incluso sin ser visto.</li>
+                        <li>✨ <strong>Respeto:</strong> Reconocer valores y derechos ajenos.</li>
+                        <li>✨ <strong>Empatía:</strong> Comprender sentimientos ajenos.</li>
+                        <li>✨ <strong>Solidaridad:</strong> Buscar el bienestar común.</li>
+                        <li>✨ <strong>Perseverancia:</strong> Esfuerzo constante.</li>
+                        <li>✨ <strong>Prudencia:</strong> Pensar antes de actuar.</li>
+                        <li>✨ <strong>Humildad:</strong> Reconocer errores y aprender.</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Dilemas Éticos',
+                content: `
+                    <p>Ocurre cuando se debe escoger entre dos decisiones difíciles donde hay conflictos de valores y no siempre hay soluciones perfectas.</p>
+                    <div class="highlight-cyan">
+                        <strong>Ejemplo del Ingeniero:</strong> Descubre materiales defectuosos.
+                        <br><em>Opciones:</em> Guardar silencio o informar y retrasar.
+                        <br><em>Decisión Ética:</em> Reportar para proteger vidas. La ética profesional prioriza la seguridad pública y el bienestar social.
+                    </div>
+                `
+            },
+            {
+                title: 'Importancia en Ingeniería',
+                content: `
+                    <p>La ingeniería impacta directamente la vida humana, la infraestructura, la seguridad y el medio ambiente.</p>
+                    <div class="study-tip" style="border-color:var(--accent-red); background:rgba(220,38,38,0.1);">
+                        <strong>Consecuencias de malas decisiones:</strong> Accidentes, daños económicos, contaminación y pérdidas humanas. Un ingeniero debe actuar siempre con responsabilidad.
+                    </div>
+                `
+            }
+        ],
         file: 'contenido/1. Ética y Moral.pdf',
         link_web: 'https://campusvirtual.ucc.edu.co/content/enforced/834307-21MON_FINGE_PREG_21ISC_709577_2610_11302_1/1.%20E%CC%81tica%20y%20Moral.pdf?isCourseFile=true'
     },
     {
         id: 'B', title: 'Módulo B: Código de Ética y Ley 842 de 2003',
-        content: `
-            <p>Es el conjunto de normas que orientan el comportamiento correcto de los profesionales de ingeniería para garantizar responsabilidad social.</p>
-            
-            <h3 style="margin: 1.5rem 0 1rem;">Principios Fundamentales</h3>
-            <ul class="value-grid">
-                <li>📖 <strong>Verdad y Honestidad:</strong> Transparencia.</li>
-                <li>🌍 <strong>Responsabilidad Social:</strong> Proteger vida.</li>
-                <li>🎓 <strong>Competencia:</strong> Estar actualizado.</li>
-                <li>🔒 <strong>Confidencialidad:</strong> Datos privados.</li>
-                <li>🤝 <strong>Lealtad:</strong> Respeto a colegas.</li>
-            </ul>
-
-            <div class="highlight-cyan">
-                <strong>Base Constitucional (Art. 26 CP):</strong> Libertad de escoger profesión. El Estado exige títulos de idoneidad para proteger a la sociedad.
-            </div>
-
-            <h3 style="margin: 1.5rem 0 1rem;">Partes de la Ley 842 de 2003</h3>
-            <div class="table-scroll">
-                <table class="glass-table">
-                    <thead><tr><th>Título</th><th>Contenido</th></tr></thead>
-                    <tbody>
-                        <tr><td>Título I</td><td>Generalidades</td></tr>
-                        <tr><td>Título II</td><td>Ejercicio profesional</td></tr>
-                        <tr><td>Título III</td><td>COPNIA</td></tr>
-                        <tr><td>Título IV</td><td>Código de Ética</td></tr>
-                        <tr><td>Título V</td><td>Régimen disciplinario</td></tr>
-                        <tr><td>Título VI</td><td>Disposiciones finales</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <p class="highlight-cyan" style="margin-top:1.5rem;">
-                <strong>Art. 39 Literal C:</strong> Deber de "Dedicar toda su aptitud y atender con la mayor diligencia y probidad los asuntos encargados por su cliente."
-            </p>
-        `,
+        topics: [
+            {
+                title: 'Código de Ética',
+                content: `
+                    <p>Conjunto de normas y principios que orientan el comportamiento correcto. Busca guiar decisiones, promover responsabilidad y mantener el prestigio profesional.</p>
+                    <p>En ingeniería, garantiza que los proyectos sean seguros y responsables.</p>
+                `
+            },
+            {
+                title: 'Ley 842 de 2003',
+                content: `
+                    <p>Ley colombiana que regula el ejercicio de la ingeniería y profesiones afines.</p>
+                    <h4 style="margin-top:1rem;">Objetivos principales:</h4>
+                    <ul class="value-grid">
+                        <li>🛡️ Proteger a la sociedad</li>
+                        <li>🎓 Garantizar idoneidad</li>
+                        <li>🚫 Evitar ejercicio ilegal</li>
+                        <li>📜 Regular responsabilidades</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Base Constitucional',
+                content: `
+                    <div class="highlight-cyan">
+                        <strong>Artículo 26 CP:</strong> Libertad de escoger profesión. El Estado puede exigir títulos de idoneidad. La ingeniería requiere vigilancia por el riesgo social que implica.
+                    </div>
+                    <h4 style="margin-top:1rem;">Historia de la Reglamentación:</h4>
+                    <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:0.5rem;">
+                        <li>🏛️ <strong>1936:</strong> Acto Legislativo 1 (Permitió reglamentar).</li>
+                        <li>📜 <strong>1937:</strong> Ley 94 (Primera ley regulatoria).</li>
+                        <li>✅ <strong>2003:</strong> Ley 842 (Norma actual vigente).</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Principios Éticos',
+                content: `
+                    <p>Principios fundamentales que todo ingeniero debe seguir:</p>
+                    <ul class="value-grid">
+                        <li>✨ Verdad y Honestidad</li>
+                        <li>🌍 Responsabilidad Social</li>
+                        <li>🎓 Competencia Profesional</li>
+                        <li>🔒 Confidencialidad</li>
+                        <li>🤝 Lealtad Profesional</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Estructura y Deberes',
+                content: `
+                    <div class="table-scroll">
+                        <table class="glass-table">
+                            <thead><tr><th>Título</th><th>Contenido</th></tr></thead>
+                            <tbody>
+                                <tr><td>Título I</td><td>Generalidades</td></tr>
+                                <tr><td>Título II</td><td>Ejercicio profesional</td></tr>
+                                <tr><td>Título III</td><td>COPNIA</td></tr>
+                                <tr><td>Título IV</td><td>Código de Ética</td></tr>
+                                <tr><td>Título V</td><td>Régimen disciplinario</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="highlight-cyan" style="margin-top:1rem;">
+                        <strong>Art. 39 Literal C:</strong> El ingeniero debe "Dedicar toda su aptitud y atender con la mayor diligencia y probidad los asuntos encargados por su cliente."
+                    </p>
+                `
+            }
+        ],
         file: 'contenido/2. Código de Ética profesional.pdf',
         link_web: 'https://campusvirtual.ucc.edu.co/content/enforced/834307-21MON_FINGE_PREG_21ISC_709577_2610_11302_1/2.%20Co%CC%81digo%20de%20E%CC%81tica%20profesional.pdf?isCourseFile=true',
         link_extra: 'https://www.copnia.gov.co/nuestra-entidad/normatividad/ley-842-de-2003'
     },
     {
         id: 'C', title: 'Módulo C: COPNIA y Régimen Disciplinario',
-        content: `
-            <p>El <strong>COPNIA</strong> es la entidad encargada de vigilar el ejercicio de la ingeniería, llevar el registro profesional y sancionar conductas indebidas.</p>
-            
-            <h3 style="margin: 1.5rem 0 1rem;">Sanciones Disciplinarias</h3>
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <div class="glass-card" style="padding: 1rem; border-left: 4px solid var(--accent-cyan);">
-                    <strong>1. Amonestación Escrita:</strong> Llamado de atención formal.
-                </div>
-                <div class="glass-card" style="padding: 1rem; border-left: 4px solid var(--accent-amber);">
-                    <strong>2. Suspensión:</strong> Prohibición temporal hasta por 5 años.
-                </div>
-                <div class="glass-card" style="padding: 1rem; border-left: 4px solid var(--accent-red);">
-                    <strong>3. Cancelación de Matrícula:</strong> Pérdida definitiva del derecho a ejercer.
-                </div>
-            </div>
-
-            <div class="study-tip">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                <span><strong>Importante:</strong> La <strong>Falta Gravísima</strong> siempre conlleva la cancelación definitiva de la matrícula.</span>
-            </div>
-        `,
+        topics: [
+            {
+                title: '¿Qué es el COPNIA?',
+                content: `
+                    <p><strong>Consejo Profesional Nacional de Ingeniería.</strong> Es la entidad encargada de vigilar y controlar el ejercicio profesional en Colombia.</p>
+                    <h4 style="margin-top:1rem;">Funciones:</h4>
+                    <ul style="margin-left:1.5rem;">
+                        <li>Registrar ingenieros y expedir matrículas.</li>
+                        <li>Vigilar el comportamiento ético.</li>
+                        <li>Investigar faltas y aplicar sanciones.</li>
+                        <li>Combatir el ejercicio ilegal.</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Vigilancia y Ejercicio Ilegal',
+                content: `
+                    <p>La vigilancia existe por el alto impacto social. Errores pueden causar colapsos, accidentes o contaminación.</p>
+                    <div class="highlight-red">
+                        <strong>Ejercicio Ilegal:</strong> Ejerce sin matrícula, usa títulos falsos o incumple normas.
+                        <br><em>Consecuencias:</em> Riesgo social, problemas legales, sanciones económicas y posibles delitos penales.
+                    </div>
+                `
+            },
+            {
+                title: 'Régimen Disciplinario',
+                content: `
+                    <p>Conjunto de normas que sancionan faltas profesionales para proteger a la sociedad y garantizar calidad.</p>
+                    <h4 style="margin-top:1rem;">Sanciones:</h4>
+                    <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:0.5rem;">
+                        <li>📢 <strong>Amonestación Escrita:</strong> Llamado formal.</li>
+                        <li>⏳ <strong>Suspensión:</strong> Prohibición temporal (hasta 5 años).</li>
+                        <li>🚫 <strong>Cancelación de Matrícula:</strong> Pérdida definitiva.</li>
+                    </ul>
+                    <div class="study-tip" style="margin-top:1rem;">
+                        <strong>Falta Gravísima:</strong> Fraude, corrupción, poner vidas en peligro. Sanción: Cancelación definitiva.
+                    </div>
+                `
+            }
+        ],
         file: 'contenido/3. COPNIA y LEY.pdf',
         link_web: 'https://campusvirtual.ucc.edu.co/content/enforced/834307-21MON_FINGE_PREG_21ISC_709577_2610_11302_1/3.%20COPNIA%20y%20LEY.pdf?isCourseFile=true'
     },
     {
-        id: 'D', title: 'Módulo D: Protección de Datos (Leyes 1581 y 1266)',
-        content: `
-            <p>Normas que protegen la información personal (Habeas Data) para evitar su uso indebido.</p>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
-                <div class="glass-card" style="padding: 1.2rem;">
-                    <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">Ley 1581 de 2012</h4>
-                    <p style="font-size: 0.9rem;">Datos personales generales. Vigilada por la <strong>SIC</strong>.</p>
-                    <ul style="font-size: 0.85rem; margin-top: 0.5rem; margin-left: 1rem;">
-                        <li>Conocer, actualizar y corregir datos.</li>
-                        <li>Autorización previa, expresa e informada.</li>
+        id: 'D', title: 'Módulo D: Protección de Datos',
+        topics: [
+            {
+                title: 'Datos Personales',
+                content: `
+                    <p>Informaciones que identifican a una persona (Nombre, cédula, teléfono, correo, datos financieros).</p>
+                    <div class="study-tip">
+                        <strong>Importancia:</strong> Protege la privacidad, evita fraudes, impide uso indebido y garantiza seguridad.
+                    </div>
+                `
+            },
+            {
+                title: 'Leyes de Protección',
+                content: `
+                    <p><strong>Ley 1581 de 2012:</strong> Regula protección de datos generales. Vigilada por la <strong>SIC</strong>.</p>
+                    <h4 style="margin-top:0.5rem;">Principios:</h4>
+                    <p style="font-size:0.85rem;">Legalidad, Finalidad, Libertad (Autorización), Seguridad y Confidencialidad.</p>
+                    <p style="margin-top:1rem;"><strong>Ley 1266 de 2008 (Habeas Data Financiero):</strong> Regula historial crediticio y bancario. Vigilada por la <strong>SuperFinanciera</strong>.</p>
+                `
+            },
+            {
+                title: 'Derechos del Titular',
+                content: `
+                    <p>El titular de los datos tiene derecho a:</p>
+                    <ul class="value-grid">
+                        <li>🔍 Conocer datos almacenados</li>
+                        <li>✏️ Corregir e informar</li>
+                        <li>🔄 Actualizar información</li>
+                        <li>🗑️ Solicitar eliminación</li>
+                        <li>🚫 Revocar autorización</li>
                     </ul>
-                </div>
-                <div class="glass-card" style="padding: 1.2rem;">
-                    <h4 style="color: var(--accent-violet); margin-bottom: 0.5rem;">Ley 1266 de 2008</h4>
-                    <p style="font-size: 0.9rem;">Habeas Data Financiero. Vigilada por la <strong>SuperFinanciera</strong>.</p>
-                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Regula historial de pagos y reportes en centrales de riesgo.</p>
-                </div>
-            </div>
-
-            <div class="highlight-cyan">
-                <strong>Caso Claro Colombia:</strong> Sanción histórica de la SIC por usar datos en "Amigos que te premian" sin permiso.
-            </div>
-        `,
+                `
+            },
+            {
+                title: 'Caso Claro Colombia',
+                content: `
+                    <div class="highlight-cyan">
+                        <strong>Caso Claro:</strong> Sanción de la SIC por usar datos en campaña sin autorización válida.
+                        <br>Demuestra la importancia vital de pedir autorización, proteger la información y cumplir normas.
+                    </div>
+                `
+            }
+        ],
         file: 'contenido/Ley_1581_de_2012.pdf',
         file2: 'contenido/Ley_1266_de_2008.pdf',
         link_web: 'https://campusvirtual.ucc.edu.co/content/enforced/834307-21MON_FINGE_PREG_21ISC_709577_2610_11302_1/4.%20Ley%201581%20de%202012%20-%20Ley%201266%20de%202008.pdf?isCourseFile=true'
     },
     {
         id: 'E', title: 'Módulo E: Propiedad Intelectual y Contratos Tecnológicos',
-        content: `
-            <p>Protege las creaciones de la mente humana (Software, música, diseños, inventos).</p>
-            
-            <h3 style="margin: 1.5rem 0 1rem;">Derecho de Autor</h3>
-            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                <div class="glass-card" style="flex: 1; padding: 1rem;">
-                    <strong>Morales:</strong> Reconocimiento al autor. Inalienables.
-                </div>
-                <div class="glass-card" style="flex: 1; padding: 1rem;">
-                    <strong>Patrimoniales:</strong> Explotación económica. Transferibles.
-                </div>
-            </div>
-
-            <h3 style="margin: 1.5rem 0 1rem;">Contratos y Licencias</h3>
-            <ul class="value-grid">
-                <li>📦 <strong>INCOTERMS:</strong> Reglas de comercio.</li>
-                <li>🏦 <strong>Fiducia:</strong> Administración de bienes.</li>
-                <li>📈 <strong>Leasing:</strong> Alquiler + Opción Compra.</li>
-                <li>📉 <strong>Renting:</strong> Alquiler puro.</li>
-                <li>🔐 <strong>Escrow:</strong> Custodia de código fuente.</li>
-            </ul>
-        `,
+        topics: [
+            {
+                title: 'Propiedad Intelectual',
+                content: `
+                    <p>Sistema jurídico que protege creaciones humanas para reconocer autores, incentivar innovación y evitar plagio.</p>
+                    <h4 style="margin-top:1rem;">Derecho de Autor:</h4>
+                    <p style="font-size:0.9rem;">Protege libros, música, software, videos y diseños.</p>
+                    <div style="display:flex; gap:1rem; margin-top:1rem;">
+                        <div class="glass-card" style="flex:1; padding:1rem;">
+                            <strong>Morales:</strong> Intransferibles, permanentes. Reconocen autoría.
+                        </div>
+                        <div class="glass-card" style="flex:1; padding:1rem;">
+                            <strong>Patrimoniales:</strong> Explotación económica. Pueden venderse o transferirse.
+                        </div>
+                    </div>
+                    <p style="margin-top:1rem; font-size:0.85rem;"><strong>Derechos Conexos:</strong> Protegen intérpretes, productores y emisoras.</p>
+                `
+            },
+            {
+                title: 'Contratos Tecnológicos',
+                content: `
+                    <h4 style="margin-bottom:0.5rem;">INCOTERMS (Comercio):</h4>
+                    <p style="font-size:0.85rem; margin-bottom:1rem;">EXW (Fábrica), FOB (Puerto), CIF (Seguro/Transporte), DDP (Impuestos pagos).</p>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                        <div class="glass-card" style="padding:1rem;">
+                            <strong>Leasing:</strong> Alquiler con opción de compra (Equipos, maquinaria).
+                        </div>
+                        <div class="glass-card" style="padding:1rem;">
+                            <strong>Renting:</strong> Alquiler sin opción de compra.
+                        </div>
+                    </div>
+                    <p style="margin-top:1rem;"><strong>Fiducia:</strong> Un tercero administra bienes o recursos.</p>
+                `
+            },
+            {
+                title: 'Licencias y Software',
+                content: `
+                    <p><strong>Software Libre:</strong> Permite usar, modificar, estudiar y compartir.</p>
+                    <p><strong>Software Propietario:</strong> Tiene restricciones legales.</p>
+                    <p><strong>Creative Commons:</strong> Compartir bajo ciertas condiciones.</p>
+                    <div class="study-tip" style="margin-top:1rem;">
+                        <strong>Escrow Tecnológico:</strong> Un tercero guarda el código fuente para proteger a las partes en el contrato.
+                    </div>
+                `
+            }
+        ],
         file: 'contenido/Propiedad-Intelectual - Contratos Tecno.pdf',
         link_web: 'https://campusvirtual.ucc.edu.co/content/enforced/834307-21MON_FINGE_PREG_21ISC_709577_2610_11302_1/Propiedad-Intelectual%20-%20Contratos%20Tecno.pdf?isCourseFile=true'
     },
     {
-        id: 'F', title: 'Módulo F: Principios de Propiedad Industrial',
-        content: `
-            <p>Rama que protege creaciones industriales y comerciales.</p>
-            
-            <div class="topics-grid" style="margin-top: 1.5rem;">
-                <div class="glass-card" style="padding: 1.2rem; text-align: center;">
-                    <strong style="color: var(--accent-cyan);">Patentes</strong>
-                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Requisitos: Novedad, nivel inventivo y aplicación industrial.</p>
-                </div>
-                <div class="glass-card" style="padding: 1.2rem; text-align: center;">
-                    <strong style="color: var(--accent-violet);">Marcas</strong>
-                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Logos y nombres de identidad.</p>
-                </div>
-                <div class="glass-card" style="padding: 1.2rem; text-align: center;">
-                    <strong style="color: var(--accent-blue);">Diseños</strong>
-                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Apariencia visual del producto.</p>
-                </div>
-                <div class="glass-card" style="padding: 1.2rem; text-align: center;">
-                    <strong style="color: var(--accent-amber);">Secretos</strong>
-                    <p style="font-size: 0.85rem; margin-top: 0.5rem;">Información confidencial clave.</p>
-                </div>
-            </div>
-        `,
+        id: 'F', title: 'Módulo F: Propiedad Industrial',
+        topics: [
+            {
+                title: '¿Qué es la P. Industrial?',
+                content: `
+                    <p>Rama que protege invenciones, marcas, diseños y secretos empresariales para fomentar innovación y competencia.</p>
+                `
+            },
+            {
+                title: 'Patentes',
+                content: `
+                    <p>Protegen inventos nuevos. Requisitos:</p>
+                    <ul class="value-grid">
+                        <li>🆕 <strong>Novedad:</strong> Debe ser algo nuevo.</li>
+                        <li>🧠 <strong>Nivel Inventivo:</strong> No debe ser obvio.</li>
+                        <li>🏭 <strong>Aplicación Industrial:</strong> Se puede fabricar.</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Marcas y Diseños',
+                content: `
+                    <p><strong>Marcas:</strong> Identifican productos (Logos, nombres, símbolos).</p>
+                    <p><strong>Diseños Industriales:</strong> Protegen apariencia estética (Ej: Celulares, autos).</p>
+                `
+            },
+            {
+                title: 'Secretos Industriales',
+                content: `
+                    <div class="highlight-cyan">
+                        <strong>Secretos:</strong> Información confidencial valiosa (Fórmulas, algoritmos, métodos de producción, estrategias).
+                    </div>
+                `
+            }
+        ],
         file: 'contenido/propiedad intelectual.pdf',
         link_web: 'https://campusvirtual.ucc.edu.co/content/enforced/834307-21MON_FINGE_PREG_21ISC_709577_2610_11302_1/propiedad%20intelectual.pdf?isCourseFile=true'
     }

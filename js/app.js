@@ -22,11 +22,24 @@ document.addEventListener('DOMContentLoaded', () => {
         this.classList.toggle('is-active');
     });
 
-    // Close menu when clicking a link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            document.getElementById('nav-links').classList.remove('active');
-            document.getElementById('hamburger').classList.remove('is-active');
+    // Smooth Scroll para todos los enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                e.preventDefault();
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Cerrar menú móvil si está abierto
+                document.getElementById('nav-links').classList.remove('active');
+                document.getElementById('hamburger').classList.remove('is-active');
+            }
         });
     });
 });
@@ -213,7 +226,41 @@ function buildPDFViewer(m) {
 function renderModules() {
     const container = document.getElementById('accordion-container');
     modulesData.forEach(m => {
-        const html = `<div class="module-accordion" id="mod-${m.id}"><div class="accordion-header" style="cursor:pointer;"><span>${m.title}</span><div class="header-actions"><button class="icon-btn btn-bm" data-id="${m.id}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button><svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.3s;"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="accordion-content searchable-text">${m.content}<div class="document-viewer" style="margin-top:2rem;"><h4 style="margin-bottom:1rem;">Material Adjunto</h4>${buildPDFViewer(m)}<div style="text-align:center; margin-top:1rem; display:flex; flex-direction:column; gap:0.5rem; align-items:center;">${m.link_web ? `<a href="${m.link_web}" target="_blank" class="btn-primary" style="padding: 0.5rem 1.5rem; font-size:0.9rem; text-decoration:none; border-radius:8px; display:inline-block; margin:0;">Abrir Documento Original en Pestaña Nueva</a>` : ''}${m.link_extra ? `<a href="${m.link_extra}" target="_blank" class="btn-primary" style="padding: 0.5rem 1.5rem; font-size:0.9rem; text-decoration:none; border-radius:8px; background:var(--accent-violet); display:inline-block; margin:0;">Consultar Normativa Extra</a>` : ''}</div></div></div></div>`;
+        // Crear botones de tópicos
+        let topicButtons = '';
+        m.topics.forEach((t, idx) => {
+            topicButtons += `<button class="topic-btn ${idx === 0 ? 'active' : ''}" onclick="switchTopic('${m.id}', ${idx}, this)">${t.title}</button>`;
+        });
+
+        const html = `
+            <div class="module-accordion" id="mod-${m.id}">
+                <div class="accordion-header" style="cursor:pointer;">
+                    <span>${m.title}</span>
+                    <div class="header-actions">
+                        <button class="icon-btn btn-bm" data-id="${m.id}">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                        </button>
+                        <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.3s;">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="accordion-content searchable-text">
+                    <div class="topic-nav">${topicButtons}</div>
+                    <div class="topic-content-area">${m.topics[0].content}</div>
+                    
+                    <div class="document-viewer" style="margin-top:2rem;">
+                        <h4 style="margin-bottom:1rem;">Material Adjunto</h4>
+                        ${buildPDFViewer(m)}
+                        <div style="text-align:center; margin-top:1rem; display:flex; flex-direction:column; gap:0.5rem; align-items:center;">
+                            ${m.link_web ? `<a href="${m.link_web}" target="_blank" class="btn-primary" style="padding: 0.5rem 1.5rem; font-size:0.9rem; text-decoration:none; border-radius:8px; display:inline-block; margin:0;">Abrir Documento Original en Pestaña Nueva</a>` : ''}
+                            ${m.link_extra ? `<a href="${m.link_extra}" target="_blank" class="btn-primary" style="padding: 0.5rem 1.5rem; font-size:0.9rem; text-decoration:none; border-radius:8px; background:var(--accent-violet); display:inline-block; margin:0;">Consultar Normativa Extra</a>` : ''}
+                        </div>
+                    </div>
+                </div>
+            </div>`;
         container.insertAdjacentHTML('beforeend', html);
     });
 
@@ -224,7 +271,6 @@ function renderModules() {
             if(!content.classList.contains('open')) {
                 content.classList.add('open');
                 
-                // Lazy load de los PDFs al abrir el acordeón para evitar congelamiento
                 const lazyPdfs = content.querySelectorAll('.pdf-lazy');
                 lazyPdfs.forEach(container => {
                     const file = container.getAttribute('data-file');
@@ -241,9 +287,54 @@ function renderModules() {
                 gsap.to(content, {height:0, opacity:0, duration:0.3, onComplete:()=>content.classList.remove('open')});
                 h.querySelector('.chevron').style.transform = "rotate(0deg)";
             }
-            document.getElementById('progreso-text').textContent = `Tu progreso: ${Math.round((openModules.size / 5)*100)}%`;
+            document.getElementById('progreso-text').textContent = `Tu progreso: ${Math.round((openModules.size / 6)*100)}%`;
         });
     });
+}
+
+window.switchTopic = function(modId, topicIdx, btn) {
+    const mod = modulesData.find(m => m.id === modId);
+    if (!mod) return;
+    const topic = mod.topics[topicIdx];
+    
+    const contentArea = document.querySelector(`#mod-${modId} .topic-content-area`);
+    if (!contentArea) return;
+    
+    const buttons = document.querySelectorAll(`#mod-${modId} .topic-btn`);
+    if (buttons[topicIdx].classList.contains('active')) return;
+
+    // Actualizar botones
+    buttons.forEach((b, idx) => b.classList.toggle('active', idx === topicIdx));
+
+    // Scroll inteligente en móviles
+    if (btn) {
+        const nav = btn.parentElement;
+        const scrollLeft = btn.offsetLeft - (nav.offsetWidth / 2) + (btn.offsetWidth / 2);
+        nav.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+    }
+
+    // Animación GSAP Premium: Salida con fade/slide -> Cambio -> Entrada con elástico
+    const tl = gsap.timeline();
+    const accordionContent = contentArea.closest('.accordion-content');
+    
+    tl.to(contentArea, {
+        opacity: 0,
+        x: -10,
+        duration: 0.15,
+        ease: "power2.in",
+        onComplete: () => {
+            contentArea.innerHTML = topic.content;
+            // Ajustar altura del acordeón al nuevo contenido
+            if (accordionContent) {
+                gsap.to(accordionContent, { height: "auto", duration: 0.3, ease: "power2.inOut" });
+            }
+        }
+    });
+    
+    tl.fromTo(contentArea, 
+        { opacity: 0, x: 10, scale: 0.99 }, 
+        { opacity: 1, x: 0, scale: 1, duration: 0.35, ease: "power2.out" }
+    );
 }
 
 function setupStats() {
