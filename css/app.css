@@ -958,3 +958,23 @@ button:active { transform: scale(0.97); }
     pointer-events: none;
     animation: none;
 }
+
+.btn-danger {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+.btn-danger:hover {
+    background: #ef4444;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+}
+.btn-danger:active {
+    transform: translateY(0);
+}
