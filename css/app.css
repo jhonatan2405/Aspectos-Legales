@@ -568,6 +568,15 @@ button:active {
     color: var(--accent-blue);
 }
 
+.btn-bm.bookmarked {
+    color: var(--accent-amber);
+}
+
+.btn-bm:hover {
+    color: var(--accent-amber);
+    transform: scale(1.1);
+}
+
 .btn-primary {
     background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
     color: #fff;

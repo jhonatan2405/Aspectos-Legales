@@ -334,7 +334,6 @@ function renderModules() {
                     }
                 });
 
-                // Animación condicional: instantánea en Android, suave en iOS/PC
                 if (isAndroid) {
                     content.style.height = 'auto';
                     content.style.opacity = '1';
@@ -354,6 +353,41 @@ function renderModules() {
                 h.querySelector('.chevron').style.transform = "rotate(0deg)";
             }
             document.getElementById('progreso-text').textContent = `Tu progreso: ${Math.round((openModules.size / 6)*100)}%`;
+        });
+    });
+    
+    // Configurar botones de bookmark (estrella)
+    setupBookmarks();
+}
+
+function setupBookmarks() {
+    const bookmarked = JSON.parse(localStorage.getItem('bookmarkedModules') || '[]');
+    
+    document.querySelectorAll('.btn-bm').forEach(btn => {
+        const modId = btn.getAttribute('data-id');
+        
+        if (bookmarked.includes(modId)) {
+            btn.classList.add('bookmarked');
+            btn.querySelector('svg').setAttribute('fill', 'currentColor');
+        }
+        
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const modId = btn.getAttribute('data-id');
+            const bookmarked = JSON.parse(localStorage.getItem('bookmarkedModules') || '[]');
+            const index = bookmarked.indexOf(modId);
+            
+            if (index > -1) {
+                bookmarked.splice(index, 1);
+                btn.classList.remove('bookmarked');
+                btn.querySelector('svg').setAttribute('fill', 'none');
+            } else {
+                bookmarked.push(modId);
+                btn.classList.add('bookmarked');
+                btn.querySelector('svg').setAttribute('fill', 'currentColor');
+            }
+            
+            localStorage.setItem('bookmarkedModules', JSON.stringify(bookmarked));
         });
     });
 }
