@@ -1,10 +1,13 @@
 let openModules = new Set();
 let statsChart;
+let isAndroid = false; // Variable global para detectar Android
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Detección de plataforma para optimización agresiva
+    // Detección de plataforma para optimización agresiva SOLO EN ANDROID
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    if (!isIOS) {
+    isAndroid = /Android/.test(navigator.userAgent);
+    
+    if (!isIOS && isAndroid) {
         document.documentElement.classList.add('perf-mode');
     }
 
@@ -28,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.classList.toggle('is-active');
     });
 
-    // Smooth Scroll para todos los enlaces internos
+    // Smooth Scroll - Deshabilitado solo en Android
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
@@ -38,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetElement) {
                 e.preventDefault();
                 targetElement.scrollIntoView({
-                    behavior: 'smooth',
+                    behavior: isAndroid ? 'auto' : 'smooth',
                     block: 'start'
                 });
                 
@@ -77,14 +80,20 @@ function updateThemeIcon(theme) {
 function setupGSAP() {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero entrance with stagger
-    gsap.fromTo('#hero h1', { opacity: 0, y: 60, skewY: 3 },
-        { opacity: 1, y: 0, skewY: 0, duration: 1.2, ease: 'expo.out', delay: 0.1 });
-    gsap.fromTo('#hero button', { opacity: 0, scale: 0.8 },
-        { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.7)', delay: 1.5 });
+    // Hero entrance - Sin animaciones en Android
+    if (isAndroid) {
+        gsap.set('#hero h1', { opacity: 1, y: 0 });
+        gsap.set('#hero button', { opacity: 1, scale: 1 });
+    } else {
+        // Animaciones premium para iOS y PC
+        gsap.fromTo('#hero h1', { opacity: 0, y: 60, skewY: 3 },
+            { opacity: 1, y: 0, skewY: 0, duration: 1.2, ease: 'expo.out', delay: 0.1 });
+        gsap.fromTo('#hero button', { opacity: 0, scale: 0.8 },
+            { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.7)', delay: 1.5 });
+    }
 
-    // Section scroll reveals - Solo en desktop para evitar parpadeos en Android
-    if (window.innerWidth > 768) {
+    // Section scroll reveals - SOLO en desktop y iOS
+    if (window.innerWidth > 768 && !isAndroid) {
         gsap.utils.toArray('.gsap-anim').forEach(section => {
             gsap.fromTo(section, { opacity: 0, y: 30 }, {
                 opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
@@ -100,7 +109,7 @@ function setupGSAP() {
             }
         });
     } else {
-        // En móviles aseguramos que todo sea visible desde el inicio
+        // En móviles Android aseguramos que todo sea visible desde el inicio
         gsap.set('.gsap-anim, .glass-card, .topic-card, .module-accordion', { opacity: 1, y: 0 });
     }
 
@@ -290,11 +299,23 @@ function renderModules() {
                     }
                 });
 
-                gsap.fromTo(content, {height:0, opacity:0}, {height:"auto", opacity:1, duration:0.4});
+                // Animación condicional: instantánea en Android, suave en iOS/PC
+                if (isAndroid) {
+                    content.style.height = 'auto';
+                    content.style.opacity = '1';
+                } else {
+                    gsap.fromTo(content, {height:0, opacity:0}, {height:"auto", opacity:1, duration:0.4});
+                }
                 h.querySelector('.chevron').style.transform = "rotate(180deg)";
                 openModules.add(h.parentElement.id);
             } else {
-                gsap.to(content, {height:0, opacity:0, duration:0.3, onComplete:()=>content.classList.remove('open')});
+                if (isAndroid) {
+                    content.style.height = '0';
+                    content.style.opacity = '0';
+                    setTimeout(() => content.classList.remove('open'), 100);
+                } else {
+                    gsap.to(content, {height:0, opacity:0, duration:0.3, onComplete:()=>content.classList.remove('open')});
+                }
                 h.querySelector('.chevron').style.transform = "rotate(0deg)";
             }
             document.getElementById('progreso-text').textContent = `Tu progreso: ${Math.round((openModules.size / 6)*100)}%`;
@@ -320,31 +341,39 @@ window.switchTopic = function(modId, topicIdx, btn) {
     if (btn) {
         const nav = btn.parentElement;
         const scrollLeft = btn.offsetLeft - (nav.offsetWidth / 2) + (btn.offsetWidth / 2);
-        nav.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+        nav.scrollTo({ left: scrollLeft, behavior: isAndroid ? 'auto' : 'smooth' });
     }
 
-    // Animación GSAP Premium: Salida con fade/slide -> Cambio -> Entrada con elástico
-    const tl = gsap.timeline();
-    const accordionContent = contentArea.closest('.accordion-content');
-    
-    tl.to(contentArea, {
-        opacity: 0,
-        x: -10,
-        duration: 0.15,
-        ease: "power2.in",
-        onComplete: () => {
-            contentArea.innerHTML = topic.content;
-            // Ajustar altura del acordeón al nuevo contenido
-            if (accordionContent) {
-                gsap.to(accordionContent, { height: "auto", duration: 0.3, ease: "power2.inOut" });
-            }
+    // Animación condicional: instantánea en Android, premium en iOS/PC
+    if (isAndroid) {
+        contentArea.innerHTML = topic.content;
+        const accordionContent = contentArea.closest('.accordion-content');
+        if (accordionContent) {
+            accordionContent.style.height = 'auto';
         }
-    });
-    
-    tl.fromTo(contentArea, 
-        { opacity: 0, x: 10, scale: 0.99 }, 
-        { opacity: 1, x: 0, scale: 1, duration: 0.35, ease: "power2.out" }
-    );
+    } else {
+        // Animación GSAP Premium para iOS y PC
+        const tl = gsap.timeline();
+        const accordionContent = contentArea.closest('.accordion-content');
+        
+        tl.to(contentArea, {
+            opacity: 0,
+            x: -10,
+            duration: 0.15,
+            ease: "power2.in",
+            onComplete: () => {
+                contentArea.innerHTML = topic.content;
+                if (accordionContent) {
+                    gsap.to(accordionContent, { height: "auto", duration: 0.3, ease: "power2.inOut" });
+                }
+            }
+        });
+        
+        tl.fromTo(contentArea, 
+            { opacity: 0, x: 10, scale: 0.99 }, 
+            { opacity: 1, x: 0, scale: 1, duration: 0.35, ease: "power2.out" }
+        );
+    }
 }
 
 function setupStats() {
