@@ -179,27 +179,21 @@ body::before {
 
 /* Modo de Alto Rendimiento para Android (Non-iOS) */
 .perf-mode .orb {
-    animation: none !important;
-    transform: none !important;
+    animation: float 25s infinite ease-in-out alternate !important;
+    transform: none;
+    opacity: 0.2;
 }
 
 .perf-mode body::before {
-    display: none !important;
+    animation: noiseMove 8s steps(10) infinite !important;
+    opacity: 0.04;
 }
 
 /* Modo de Alto Rendimiento SOLO para Android */
-.perf-mode .orb {
-    display: none !important;
-}
-
-.perf-mode body::before {
-    display: none !important;
-}
-
 .perf-mode .glass-card,
 .perf-mode .topic-nav,
 .perf-mode .module-accordion {
-    backdrop-filter: none !important;
+    backdrop-filter: blur(10px) !important;
     background: var(--bg-card) !important;
 }
 
