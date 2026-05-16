@@ -12,9 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Optimizaciones adicionales para Android
         document.body.style.webkitTapHighlightColor = 'transparent';
         document.body.style.touchAction = 'manipulation';
-        
-        // Lazy loading agresivo para Android
-        lazyLoadSections();
     }
 
     initTheme();
@@ -22,14 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupTyped();
     startCountdown();
     setupNavDots();
-    
-    // Cargar módulos de forma diferida en Android
-    if (isAndroid) {
-        setTimeout(() => renderModules(), 100);
-    } else {
-        renderModules();
-    }
-    
+    renderModules();
     setupFlashcards();
     setupExamSystem();
     setupStats();
@@ -65,28 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
-// Lazy loading de secciones para Android
-function lazyLoadSections() {
-    const sections = document.querySelectorAll('section');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('loaded');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        rootMargin: '50px'
-    });
-    
-    sections.forEach(section => {
-        if (section.id !== 'hero') {
-            section.style.contentVisibility = 'auto';
-            observer.observe(section);
-        }
-    });
-}
 
 function initTheme() {
     const saved = localStorage.getItem('theme') || 'light';

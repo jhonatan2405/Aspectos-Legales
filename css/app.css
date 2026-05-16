@@ -485,12 +485,6 @@ header {
     will-change: auto;
 }
 
-/* Content visibility para lazy loading en Android */
-.perf-mode section:not(#hero) {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 500px;
-}
-
 .perf-mode .topic-card:hover {
     transform: translateY(-5px) scale(1.01) !important;
     box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2) !important;
