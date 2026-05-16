@@ -485,6 +485,44 @@ header {
     transition: none;
 }
 
+/* Optimizaciones adicionales para Android */
+.perf-mode * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.perf-mode img,
+.perf-mode svg {
+    will-change: auto;
+}
+
+.perf-mode .topic-card:hover,
+.perf-mode .glass-card:hover,
+.perf-mode .module-accordion:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.perf-mode button:active {
+    transform: none !important;
+}
+
+.perf-mode .uiverse {
+    --duration: 0s !important;
+}
+
+.perf-mode .uiverse .wrapper .circle {
+    display: none !important;
+}
+
+.perf-mode .topic-card,
+.perf-mode .topic-btn,
+.perf-mode .exam-option,
+.perf-mode .nav-links a,
+.perf-mode .topic-icon {
+    transition: none !important;
+}
+
 .glass-card::after {
     content: "";
     position: absolute;

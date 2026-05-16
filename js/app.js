@@ -1,14 +1,17 @@
 let openModules = new Set();
 let statsChart;
-let isAndroid = false; // Variable global para detectar Android
+let isAndroid = false;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Detección de plataforma para optimización agresiva SOLO EN ANDROID
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     isAndroid = /Android/.test(navigator.userAgent);
     
     if (!isIOS && isAndroid) {
         document.documentElement.classList.add('perf-mode');
+        
+        // Optimizaciones adicionales para Android
+        document.body.style.webkitTapHighlightColor = 'transparent';
+        document.body.style.touchAction = 'manipulation';
     }
 
     initTheme();
