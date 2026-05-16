@@ -108,17 +108,29 @@ body::before {
 .orb-2 { width: 50vw; height: 50vw; background: radial-gradient(circle, var(--accent-violet) 0%, transparent 60%); bottom: -20vw; right: -20vw; animation-delay: -5s; }
 .orb-3 { width: 45vw; height: 45vw; background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 60%); top: 30%; left: 40%; animation-delay: -10s; }
 
+/* Modo de Alto Rendimiento para Android (Non-iOS) */
+.perf-mode .orb {
+    animation: none !important;
+    transform: none !important;
+}
+.perf-mode body::before {
+    display: none !important;
+}
+
 @media (max-width: 768px) {
+    .perf-mode .glass-card, 
+    .perf-mode .topic-nav, 
+    .perf-mode .module-accordion {
+        backdrop-filter: none !important;
+        background: var(--bg-card) !important;
+    }
     .orb { 
-        animation-duration: 45s; /* Ralentizar para ahorrar GPU */
-        opacity: 0.2;
+        animation: none !important; 
+        opacity: 0.15;
     }
     body::before { 
-        animation: none; /* El ruido estático ahorra muchísimo procesamiento */
-        opacity: 0.04;
-    }
-    .topic-nav, .glass-card {
-        backdrop-filter: blur(8px); /* Reducir de 20px a 8px para fluidez */
+        animation: none !important;
+        opacity: 0.03;
     }
 }
 

@@ -2,6 +2,12 @@ let openModules = new Set();
 let statsChart;
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Detección de plataforma para optimización agresiva
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (!isIOS) {
+        document.documentElement.classList.add('perf-mode');
+    }
+
     initTheme();
     setupGSAP();
     setupTyped();
