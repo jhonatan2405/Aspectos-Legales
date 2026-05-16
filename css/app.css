@@ -42,6 +42,14 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Fix para estabilidad de renderizado en móviles/Android */
+.glass-card, .topic-card, .module-accordion, .orb, body::before, .topic-nav {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
 body {
     font-family: 'Inter', sans-serif;
     color: var(--text-primary);

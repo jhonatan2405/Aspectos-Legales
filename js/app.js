@@ -77,22 +77,26 @@ function setupGSAP() {
     gsap.fromTo('#hero button', { opacity: 0, scale: 0.8 },
         { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.7)', delay: 1.5 });
 
-    // Section scroll reveals with stagger on children
-    gsap.utils.toArray('.gsap-anim').forEach(section => {
-        gsap.fromTo(section, { opacity: 0, y: 50 }, {
-            opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
-            scrollTrigger: { trigger: section, start: 'top 82%' }
-        });
-
-        // Stagger cards inside the section
-        const cards = section.querySelectorAll('.glass-card, .topic-card, .module-accordion');
-        if (cards.length > 1) {
-            gsap.fromTo(cards, { opacity: 0, y: 30 }, {
-                opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out',
-                scrollTrigger: { trigger: section, start: 'top 75%' }
+    // Section scroll reveals - Solo en desktop para evitar parpadeos en Android
+    if (window.innerWidth > 768) {
+        gsap.utils.toArray('.gsap-anim').forEach(section => {
+            gsap.fromTo(section, { opacity: 0, y: 30 }, {
+                opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+                scrollTrigger: { trigger: section, start: 'top 85%' }
             });
-        }
-    });
+
+            const cards = section.querySelectorAll('.glass-card, .topic-card, .module-accordion');
+            if (cards.length > 0) {
+                gsap.fromTo(cards, { opacity: 0, y: 20 }, {
+                    opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power1.out',
+                    scrollTrigger: { trigger: section, start: 'top 80%' }
+                });
+            }
+        });
+    } else {
+        // En móviles aseguramos que todo sea visible desde el inicio
+        gsap.set('.gsap-anim, .glass-card, .topic-card, .module-accordion', { opacity: 1, y: 0 });
+    }
 
     // Active nav link tracking
     const sections = document.querySelectorAll('section[id]');
