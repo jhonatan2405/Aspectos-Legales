@@ -52,6 +52,10 @@ function setupExamSystem() {
         try{ document.documentElement.requestFullscreen(); }catch(e){}
         
         examIsActive = true; cheatCount = 0; examQ = 0; examAns = []; examTime = 3600;
+        document.body.classList.add('body-exam-active');
+        if (window.updatePresenceStatus) {
+            window.updatePresenceStatus(name, true);
+        }
         
         const tracker = document.getElementById('exam-cheat-tracker');
         const trackerText = document.getElementById('exam-cheat-tracker-text');
@@ -243,6 +247,12 @@ window.finishExam = function(isFatal = false) {
     antiCheatLock = false;
     fullscreenMonitoringActive = false;
     clearInterval(examInt);
+    
+    document.body.classList.remove('body-exam-active');
+    const savedName = localStorage.getItem('student-name') || 'Estudiante';
+    if (window.updatePresenceStatus) {
+        window.updatePresenceStatus(savedName, false);
+    }
     document.removeEventListener('visibilitychange', antiCheat);
     window.removeEventListener('blur', antiCheat);
     document.removeEventListener('contextmenu', blockContext);

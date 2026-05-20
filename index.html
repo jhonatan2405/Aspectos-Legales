@@ -379,7 +379,52 @@
         </div>
     </div>
 
-    
+    <!-- Modal para Solicitar Nombre al Ingresar por Primera Vez -->
+    <div id="name-prompt-modal" class="overlay">
+        <div class="overlay-content" style="max-width: 420px; padding: 2.2rem; border-radius: 20px; text-align: center;">
+            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2" style="margin-bottom: 1.2rem; filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.45));"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <h3 style="margin-bottom: 0.6rem; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.5rem;">¡Bienvenido!</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.8rem; line-height: 1.5;">Ingresa tu nombre para registrar tu sesión de estudio y simulacros de examen en vivo.</p>
+            <input type="text" id="prompt-student-name" class="search-input" placeholder="Tu nombre..." style="margin-bottom: 1.8rem; text-align: center; font-size: 1rem; padding: 0.8rem 1rem;" required>
+            <button class="uiverse uiverse-block" id="btn-save-prompt-name">
+                <div class="wrapper">
+                    <span>Comenzar</span>
+                    <div class="circle circle-12"></div><div class="circle circle-11"></div><div class="circle circle-10"></div>
+                    <div class="circle circle-9"></div><div class="circle circle-8"></div><div class="circle circle-7"></div>
+                    <div class="circle circle-6"></div><div class="circle circle-5"></div><div class="circle circle-4"></div>
+                    <div class="circle circle-3"></div><div class="circle circle-2"></div><div class="circle circle-1"></div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Real-time Active Users Widget & Panel -->
+    <div id="active-users-widget" class="active-users-widget" title="Ver personas en línea">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span class="active-users-pulse"></span>
+        <span id="active-users-count" class="active-users-count">1</span>
+    </div>
+
+    <div id="active-users-panel" class="active-users-panel">
+        <div class="active-users-header">
+            <h3>Personas en Línea</h3>
+            <button id="active-users-close" class="icon-btn" title="Cerrar panel">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="active-users-body">
+            <div id="active-users-list" class="active-users-list">
+                <!-- Se llenará vía JS -->
+            </div>
+            <div class="active-users-footer">
+                <label for="presence-username">Tu nombre en vivo:</label>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem; align-items: center;">
+                    <input type="text" id="presence-username" class="search-input" style="margin: 0; padding: 0.5rem 0.75rem; font-size: 0.85rem; flex: 1;" placeholder="Tu nombre..." maxlength="25">
+                    <button id="presence-update-btn">Actualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Vercel Analytics -->
     <script defer src="/_vercel/insights/script.js"></script>

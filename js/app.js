@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupStats();
     if(window.loadRanking) window.loadRanking();
     setupOverlays();
-    
+    setupPresenceSystem();
     
 
     // Hamburger Menu
@@ -484,3 +484,152 @@ window.openAndScroll = function(id) {
     if(!mod.querySelector('.accordion-content').classList.contains('open')) mod.querySelector('.accordion-header').click();
     mod.scrollIntoView({behavior:'smooth'});
 };
+
+function setupPresenceSystem() {
+    let savedName = localStorage.getItem('student-name');
+    const namePromptModal = document.getElementById('name-prompt-modal');
+    const promptInput = document.getElementById('prompt-student-name');
+    const promptSaveBtn = document.getElementById('btn-save-prompt-name');
+
+    const examNameInput = document.getElementById('student-name');
+    const presenceNameInput = document.getElementById('presence-username');
+
+    function initializeSystemWithName(name) {
+        localStorage.setItem('student-name', name);
+        if (examNameInput) examNameInput.value = name;
+        if (presenceNameInput) presenceNameInput.value = name;
+        
+        if (window.initPresence) {
+            window.initPresence(name);
+        }
+        if (window.startStudySession) {
+            window.startStudySession(name);
+        }
+    }
+
+    if (!savedName) {
+        // Mostrar modal obligatorio al ingresar por primera vez
+        if (namePromptModal) {
+            namePromptModal.classList.add('active');
+            
+            const handleSaveName = () => {
+                const nameVal = promptInput.value.trim();
+                if (nameVal) {
+                    initializeSystemWithName(nameVal);
+                    namePromptModal.classList.remove('active');
+                } else {
+                    alert('Por favor, ingresa tu nombre para continuar.');
+                }
+            };
+
+            if (promptSaveBtn) {
+                promptSaveBtn.addEventListener('click', handleSaveName);
+            }
+
+            if (promptInput) {
+                promptInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') handleSaveName();
+                });
+            }
+        } else {
+            savedName = `Estudiante #${Math.floor(100 + Math.random() * 900)}`;
+            initializeSystemWithName(savedName);
+        }
+    } else {
+        initializeSystemWithName(savedName);
+    }
+
+    const widget = document.getElementById('active-users-widget');
+    const panel = document.getElementById('active-users-panel');
+    const closeBtn = document.getElementById('active-users-close');
+
+    if (widget && panel) {
+        widget.addEventListener('click', (e) => {
+            e.stopPropagation();
+            panel.classList.toggle('active');
+        });
+        
+        // Evitar que hacer clic dentro del panel lo cierre
+        panel.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        
+        // Cerrar al hacer clic en cualquier parte fuera del panel
+        document.addEventListener('click', () => {
+            panel.classList.remove('active');
+        });
+    }
+
+    if (closeBtn && panel) {
+        closeBtn.addEventListener('click', () => {
+            panel.classList.remove('active');
+        });
+    }
+
+    if (examNameInput) {
+        examNameInput.addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            if (val) {
+                localStorage.setItem('student-name', val);
+                if (presenceNameInput) {
+                    presenceNameInput.value = val;
+                }
+                if (window.updatePresenceStatus) {
+                    window.updatePresenceStatus(val, false);
+                }
+            }
+        });
+    }
+
+    const updateBtn = document.getElementById('presence-update-btn');
+    if (updateBtn && presenceNameInput) {
+        // Sincronizar en vivo arriba el input del simulacro mientras escribe
+        presenceNameInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            if (examNameInput) {
+                examNameInput.value = val;
+            }
+
+            // También actualizar la tarjeta propia en la lista de arriba en tiempo real
+            const myNameEl = document.querySelector('.my-own-presence .active-user-name');
+            const myAvatarEl = document.querySelector('.my-own-presence .active-user-avatar');
+            if (myNameEl) {
+                myNameEl.textContent = val || 'Tú';
+            }
+            if (myAvatarEl) {
+                myAvatarEl.textContent = val.trim().charAt(0).toUpperCase() || '?';
+                if (window.getAvatarColor) {
+                    myAvatarEl.style.backgroundColor = window.getAvatarColor(val);
+                }
+            }
+        });
+
+        updateBtn.addEventListener('click', () => {
+            const val = presenceNameInput.value.trim();
+            if (val) {
+                localStorage.setItem('student-name', val);
+                if (examNameInput) examNameInput.value = val;
+                if (window.updatePresenceStatus) {
+                    window.updatePresenceStatus(val, false);
+                }
+                
+                // Feedback visual en el botón usando clases CSS
+                const originalText = updateBtn.textContent;
+                updateBtn.textContent = '✓';
+                updateBtn.classList.add('success');
+                setTimeout(() => {
+                    updateBtn.textContent = originalText;
+                    updateBtn.classList.remove('success');
+                }, 1500);
+            }
+        });
+
+        // Permitir actualizar al presionar Enter en el input
+        presenceNameInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                updateBtn.click();
+            }
+        });
+    }
+}
+
