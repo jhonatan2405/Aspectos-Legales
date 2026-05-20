@@ -35,16 +35,30 @@ function setupExamSystem() {
         
         examIsActive = true; cheatCount = 0; examQ = 0; examAns = []; examTime = 3600;
         
+        const tracker = document.getElementById('exam-cheat-tracker');
+        const trackerText = document.getElementById('exam-cheat-tracker-text');
+        if (tracker && trackerText) {
+            tracker.style.borderColor = 'var(--accent-cyan)';
+            tracker.style.background = 'rgba(6, 182, 212, 0.08)';
+            trackerText.innerHTML = `Faltas cometidas: <strong>0 de 3</strong>. Recuerda que no puedes hacer trampa, salir de la pestaña ni abandonar la pantalla completa.`;
+        }
+        
         document.getElementById('exam-welcome').classList.add('hidden');
         document.getElementById('exam-active').classList.remove('hidden');
         
         // Hide all other sections and navs to focus on exam
         document.querySelectorAll('section:not(#simulacro), nav, header, footer').forEach(el => el.classList.add('hidden'));
         
+        fullscreenMonitoringActive = false;
+        setTimeout(() => {
+            if (examIsActive) fullscreenMonitoringActive = true;
+        }, 1500);
+
         // Only register these once, guarded by examIsActive flag
         document.addEventListener('visibilitychange', antiCheat);
         document.addEventListener('contextmenu', blockContext);
         document.addEventListener('keydown', blockKeys);
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
         // Use a small delay before adding blur to avoid immediate trigger
         setTimeout(() => {
             if(examIsActive) window.addEventListener('blur', antiCheat);
@@ -95,30 +109,65 @@ function setupExamSystem() {
 }
 
 let antiCheatLock = false;
-function antiCheat() {
+let fullscreenMonitoringActive = false;
+
+function triggerAntiCheatWarning(reason) {
     if(!examIsActive) return;
     if(antiCheatLock) return; // prevent duplicate triggers
-    if(document.visibilityState === 'hidden' || !document.hasFocus()) {
-        antiCheatLock = true;
-        cheatCount++;
-        if(cheatCount >= 3) {
-            document.getElementById('cheat-fatal-overlay').classList.add('active');
-            antiCheatLock = false;
-        } else {
-            const warn = document.getElementById('cheat-warn-overlay');
-            warn.classList.add('active');
-            document.getElementById('cheat-warn-msg').textContent = `Saliste de la ventana. Advertencia ${cheatCount}/3`;
-            let t = 5;
-            document.getElementById('cheat-countdown').textContent = t;
-            const int = setInterval(() => {
-                t--; document.getElementById('cheat-countdown').textContent = t;
-                if(t<=0) {
-                    clearInterval(int);
-                    warn.classList.remove('active');
-                    antiCheatLock = false; // release lock after countdown
-                }
-            }, 1000);
+    antiCheatLock = true;
+    cheatCount++;
+    
+    const tracker = document.getElementById('exam-cheat-tracker');
+    const trackerText = document.getElementById('exam-cheat-tracker-text');
+    if (tracker && trackerText) {
+        if (cheatCount === 1) {
+            tracker.style.borderColor = 'var(--accent-amber)';
+            tracker.style.background = 'rgba(245, 158, 11, 0.08)';
+        } else if (cheatCount >= 2) {
+            tracker.style.borderColor = 'var(--accent-red)';
+            tracker.style.background = 'rgba(239, 68, 68, 0.08)';
         }
+        trackerText.innerHTML = `Faltas cometidas: <strong style="color: ${cheatCount >= 2 ? 'var(--accent-red)' : 'var(--accent-amber)'}">${cheatCount} de 3</strong>. Al llegar a 3, el examen será anulado inmediatamente.`;
+    }
+    if(cheatCount >= 3) {
+        document.getElementById('cheat-fatal-overlay').classList.add('active');
+        antiCheatLock = false;
+    } else {
+        const warn = document.getElementById('cheat-warn-overlay');
+        warn.classList.add('active');
+        document.getElementById('cheat-warn-msg').textContent = `${reason} Advertencia ${cheatCount}/3`;
+        let t = 5;
+        document.getElementById('cheat-countdown').textContent = t;
+        const int = setInterval(() => {
+            t--; document.getElementById('cheat-countdown').textContent = t;
+            if(t<=0) {
+                clearInterval(int);
+                warn.classList.remove('active');
+                
+                // Return to fullscreen immediately when countdown finishes
+                if (examIsActive && !document.fullscreenElement) {
+                    try { document.documentElement.requestFullscreen(); } catch(e) {}
+                }
+                
+                setTimeout(() => {
+                    antiCheatLock = false; // release lock after transition
+                }, 1000);
+            }
+        }, 1000);
+    }
+}
+
+function antiCheat() {
+    if(!examIsActive) return;
+    if(document.visibilityState === 'hidden' || !document.hasFocus()) {
+        triggerAntiCheatWarning("Saliste de la ventana.");
+    }
+}
+
+function handleFullscreenChange() {
+    if (!examIsActive || !fullscreenMonitoringActive) return;
+    if (!document.fullscreenElement) {
+        triggerAntiCheatWarning("Saliste de pantalla completa.");
     }
 }
 function blockContext(e) { if(examIsActive) e.preventDefault(); }
@@ -163,11 +212,13 @@ function renderExamQ() {
 window.finishExam = function(isFatal = false) {
     examIsActive = false;
     antiCheatLock = false;
+    fullscreenMonitoringActive = false;
     clearInterval(examInt);
     document.removeEventListener('visibilitychange', antiCheat);
     window.removeEventListener('blur', antiCheat);
     document.removeEventListener('contextmenu', blockContext);
     document.removeEventListener('keydown', blockKeys);
+    document.removeEventListener('fullscreenchange', handleFullscreenChange);
     
     try{ document.exitFullscreen(); }catch(e){}
     
@@ -219,7 +270,7 @@ window.finishExam = function(isFatal = false) {
         `;
     });
     
-    saveResultLocally(score, pct, 3600-examTime, cheatCount);
+    saveResultLocally(score, pct, 3600-examTime, cheatCount, isFatal);
     if(window.saveToSupabase) saveToSupabase(score, pct, 3600-examTime, cheatCount, isFatal);
 }
 

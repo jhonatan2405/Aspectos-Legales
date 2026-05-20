@@ -423,7 +423,13 @@ function setupStats() {
     hist.forEach(h => {
         sum += h.p; if(h.p > best) best = h.p;
         const badge = h.f ? '<span style="color:var(--accent-red); font-size:0.65rem; border:1px solid var(--accent-red); padding:2px 4px; border-radius:4px; margin-left:6px; background:rgba(220,38,38,0.1);">ANULADO</span>' : '';
-        b.innerHTML += `<tr style="${h.f ? 'opacity: 0.7;' : ''}"><td>${h.date}</td><td>${h.f ? '0' : h.s}/20 ${badge}</td><td>${h.f ? '0' : h.p}%</td><td class="tabular-nums">${Math.floor(h.t/60)}:${(h.t%60).toString().padStart(2,'0')}</td></tr>`;
+        b.innerHTML += `<tr style="${h.f ? 'opacity: 0.7;' : ''}">
+            <td>${h.date}</td>
+            <td>${h.f ? '0' : h.s}/20 ${badge}</td>
+            <td>${h.f ? '0' : h.p}%</td>
+            <td class="tabular-nums">${Math.floor(h.t/60)}:${(h.t%60).toString().padStart(2,'0')}</td>
+            <td class="tabular-nums">${h.c !== undefined ? h.c : 0}</td>
+        </tr>`;
     });
     
     document.getElementById('stat-avg').textContent = Math.round(sum/hist.length) + "%";
