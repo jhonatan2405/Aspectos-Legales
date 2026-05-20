@@ -333,11 +333,20 @@
     </div>
 
     <div id="cheat-warn-overlay" class="overlay">
-        <div class="overlay-content" style="border-color:var(--accent-amber);">
+        <div class="overlay-content" style="border-color:var(--accent-amber); max-width: 400px; text-align: center;">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent-amber)" stroke-width="2" style="margin-bottom:1rem;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             <h2 style="color:var(--text-primary);">ADVERTENCIA</h2>
             <p id="cheat-warn-msg" style="margin:1rem 0; color:var(--text-secondary);"></p>
-            <div class="tabular-nums" id="cheat-countdown" style="font-size:3rem; font-weight:700; color:var(--accent-amber);">5</div>
+            <div class="tabular-nums" id="cheat-countdown" style="font-size:3rem; font-weight:700; color:var(--accent-amber); margin-bottom: 1.5rem;">5</div>
+            <button class="uiverse" id="btn-resume-exam" disabled style="opacity: 0.5; pointer-events: none; cursor: not-allowed; width: 100%;">
+              <div class="wrapper" style="width: 100%; justify-content: center;">
+                <span id="btn-resume-text">Espera 5s...</span>
+                <div class="circle circle-12"></div><div class="circle circle-11"></div><div class="circle circle-10"></div>
+                <div class="circle circle-9"></div><div class="circle circle-8"></div><div class="circle circle-7"></div>
+                <div class="circle circle-6"></div><div class="circle circle-5"></div><div class="circle circle-4"></div>
+                <div class="circle circle-3"></div><div class="circle circle-2"></div><div class="circle circle-1"></div>
+              </div>
+            </button>
         </div>
     </div>
 

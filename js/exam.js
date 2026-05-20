@@ -2,6 +2,24 @@ let examIsActive = false, examQ = 0, examTime = 3600, examInt, examAns = [], che
 let currentExamData = [];
 
 function setupExamSystem() {
+    // Escuchador para el botón de reanudar examen en la advertencia (Gesture)
+    const resumeBtn = document.getElementById('btn-resume-exam');
+    if (resumeBtn) {
+        resumeBtn.addEventListener('click', () => {
+            const warn = document.getElementById('cheat-warn-overlay');
+            if (warn) warn.classList.remove('active');
+            
+            // Retornar a pantalla completa de manera segura mediante la interacción del usuario
+            if (examIsActive && !document.fullscreenElement) {
+                try { document.documentElement.requestFullscreen(); } catch(e) {}
+            }
+            
+            setTimeout(() => {
+                antiCheatLock = false; // liberar el bloqueo después de la transición
+            }, 1000);
+        });
+    }
+
     document.getElementById('btn-start-exam').addEventListener('click', async () => {
         const name = document.getElementById('student-name').value.trim();
         if(!name) { alert('Ingresa tu nombre'); return; }
@@ -138,20 +156,31 @@ function triggerAntiCheatWarning(reason) {
         document.getElementById('cheat-warn-msg').textContent = `${reason} Advertencia ${cheatCount}/3`;
         let t = 5;
         document.getElementById('cheat-countdown').textContent = t;
+        
+        const resumeBtn = document.getElementById('btn-resume-exam');
+        const resumeText = document.getElementById('btn-resume-text');
+        if (resumeBtn && resumeText) {
+            resumeBtn.disabled = true;
+            resumeBtn.style.opacity = '0.5';
+            resumeBtn.style.pointerEvents = 'none';
+            resumeBtn.style.cursor = 'not-allowed';
+            resumeText.textContent = `Espera 5s...`;
+        }
+        
         const int = setInterval(() => {
-            t--; document.getElementById('cheat-countdown').textContent = t;
+            t--;
+            document.getElementById('cheat-countdown').textContent = t;
+            if (resumeText) resumeText.textContent = `Espera ${t}s...`;
+            
             if(t<=0) {
                 clearInterval(int);
-                warn.classList.remove('active');
-                
-                // Return to fullscreen immediately when countdown finishes
-                if (examIsActive && !document.fullscreenElement) {
-                    try { document.documentElement.requestFullscreen(); } catch(e) {}
+                if (resumeBtn && resumeText) {
+                    resumeBtn.disabled = false;
+                    resumeBtn.style.opacity = '1';
+                    resumeBtn.style.pointerEvents = 'auto';
+                    resumeBtn.style.cursor = 'pointer';
+                    resumeText.textContent = `Entendido y Volver al Examen`;
                 }
-                
-                setTimeout(() => {
-                    antiCheatLock = false; // release lock after transition
-                }, 1000);
             }
         }, 1000);
     }
@@ -227,6 +256,13 @@ window.finishExam = function(isFatal = false) {
     
     // Restore all sections after exam
     document.querySelectorAll('section:not(#simulacro), nav, header, footer').forEach(el => el.classList.remove('hidden'));
+    
+    setTimeout(() => {
+        const resEl = document.getElementById('exam-results');
+        if (resEl) {
+            resEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 200);
     
     let score = 0;
     if(!isFatal) {
