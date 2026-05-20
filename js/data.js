@@ -401,28 +401,36 @@ const fcData = [
 
 // Base de preguntas (Se eligen 10 al azar en cada intento)
 const allQuestions = [
-    { q: "¿Qué entidad se encarga de inspeccionar, vigilar y llevar el registro profesional de los ingenieros en Colombia?", opts: ["Ministerio de TIC", "COPNIA", "Superintendencia de Industria y Comercio", "Consejo de Estado"], a: 1, exp: "El Consejo Profesional Nacional de Ingeniería (COPNIA) es la entidad encargada por la Ley 842 de 2003 para estas funciones." },
-    { q: "Dentro de los deberes del profesional (Art. 39 de la Ley 842), se establece que el ingeniero debe:", opts: ["Cobrar siempre la tarifa máxima del mercado.", "Dedicar toda su aptitud y atender con probidad los asuntos encargados por su cliente.", "Garantizar el éxito del proyecto sin importar los recursos.", "Ocultar errores técnicos al cliente para no generar alarma."], a: 1, exp: "El Artículo 39 literal c establece como deber dedicar toda su aptitud y atender con la mayor diligencia y probidad los asuntos." },
-    { q: "Si un ingeniero comete una falta catalogada como gravísima, la sanción aplicable será:", opts: ["Amonestación escrita.", "Suspensión por 6 meses.", "Cancelación de la matrícula profesional.", "Multa de 10 salarios mínimos."], a: 2, exp: "Las faltas gravísimas SIEMPRE conllevan la cancelación de la matrícula profesional, según la escala de sanciones." },
-    { q: "La Ley 1581 de 2012 exige que, para tratar los datos personales de un usuario, la autorización debe ser:", opts: ["Tácita y general.", "Previa, expresa e informada.", "Verbal y opcional.", "Asumida si no dice lo contrario."], a: 1, exp: "La autorización debe ser siempre previa, expresa (inequívoca) e informada (sabiendo para qué se usará)." },
-    { q: "¿Cuál derecho de autor es intransferible, no se puede vender y garantiza el reconocimiento del creador?", opts: ["Derechos Patrimoniales", "Derechos Morales", "Derechos Conexos", "Patentes"], a: 1, exp: "Los Derechos Morales son inalienables, perpetuos e irrenunciables." },
-    { q: "¿Cuál es la ley actual que regula el ejercicio de la ingeniería y profesiones afines en Colombia?", opts: ["Ley 94 de 1937", "Ley 1581 de 2012", "Ley 842 de 2003", "Ley 1266 de 2008"], a: 2, exp: "La Ley 842 de 2003 es el marco jurídico vigente para el ejercicio de la ingeniería." },
-    { q: "¿Qué superintendencia vigila el cumplimiento de la Ley de Habeas Data Financiero (Ley 1266 de 2008)?", opts: ["Superintendencia de Industria y Comercio", "Superintendencia de Sociedades", "Superintendencia Financiera", "Superintendencia de Salud"], a: 2, exp: "Los datos crediticios y financieros son vigilados por la SuperFinanciera." },
-    { q: "El 'Escrow' Tecnológico consiste en:", opts: ["Alquiler de equipos con opción de compra.", "La entrega del código fuente a un tercero neutral como garantía.", "La venta de derechos patrimoniales a una empresa extranjera.", "El registro de una patente ante la SIC."], a: 1, exp: "El Escrow es un contrato donde un tercero custodia el código fuente por si el proveedor original falla." },
-    { q: "La diferencia principal entre ética y moral es que:", opts: ["La ética es práctica y la moral es teórica.", "La ética aplica en empresas y la moral en la familia.", "La ética es la reflexión filosófica teórica y la moral es el conjunto de normas prácticas.", "Son exactamente lo mismo legalmente."], a: 2, exp: "La ética estudia el 'por qué' (teórica) y la moral aplica el 'cómo' (práctica)." },
-    { q: "Un Leasing difiere de un Renting principalmente porque el Leasing:", opts: ["Es más económico.", "No incluye mantenimiento.", "Incluye siempre opción de compra al final del contrato.", "Es solo para licencias de software."], a: 2, exp: "El leasing financiero se caracteriza por tener explícita la opción de compra del bien." },
-    { q: "Según los principios de la propiedad industrial, para que un invento sea patentable debe cumplir con:", opts: ["Ser estético y barato.", "Novedad, nivel inventivo y aplicación industrial.", "Estar escrito en inglés y ser digital.", "Tener derechos morales transferibles."], a: 1, exp: "Toda patente exige estos 3 requisitos: nuevo en el mundo, que no sea obvio (nivel inventivo) y que se pueda fabricar (aplicación)." },
-    { q: "La Ley 1581 de 2012 estipula que el 'Habeas Data' permite a los ciudadanos:", opts: ["Conocer, actualizar y rectificar la información que se haya recogido sobre ellos.", "Evadir impuestos si sus datos son vulnerados.", "Descargar software propietario de forma gratuita.", "Ejercer la ingeniería sin tarjeta profesional."], a: 0, exp: "El núcleo del Habeas Data es el control sobre los propios datos personales." },
-    { q: "El Artículo 26 de la Constitución Política de Colombia estipula:", opts: ["El derecho a la vida.", "La libertad de escoger profesión u oficio, y la facultad del Estado de exigir títulos de idoneidad.", "El derecho al internet gratuito.", "La abolición del registro profesional."], a: 1, exp: "Este artículo es la base para que el Estado reglamente profesiones con riesgo social como la ingeniería." },
-    { q: "¿Cuál de estos NO es uno de los 5 principios rectores del Código de Ética de Ingeniería?", opts: ["Verdad y Honestidad", "Confidencialidad", "Rentabilidad Máxima", "Responsabilidad Social"], a: 2, exp: "La rentabilidad máxima no es un principio ético; lo son la verdad, responsabilidad, competencia, confidencialidad y lealtad." },
-    { q: "Según la escala de sanciones de COPNIA, una falta grave con antecedentes conlleva:", opts: ["Amonestación escrita.", "Suspensión de la matrícula de 2 a 5 años.", "Trabajo comunitario.", "Suspensión hasta 6 meses."], a: 1, exp: "La reiteración de faltas graves agrava la sanción, subiéndola al rango de 2 a 5 años." },
-    { q: "En el caso del Edificio Space en Medellín, la sanción a los ingenieros responsables por parte de COPNIA fue:", opts: ["Multa económica.", "Suspensión de 2 años.", "Cancelación definitiva de la matrícula profesional.", "Ninguna, fueron absueltos."], a: 2, exp: "Al ser una falta gravísima con consecuencias fatales y detrimento enorme, la sanción máxima fue aplicada." },
-    { q: "El software libre se basa en 4 libertades esenciales. ¿Cuál de estas NO es una de ellas?", opts: ["Libertad de usar el programa con cualquier propósito.", "Libertad de estudiar cómo funciona y modificarlo.", "Libertad de vender el software como propietario cerrando el código.", "Libertad de distribuir copias a los demás."], a: 2, exp: "El software libre no prohíbe vender, pero no permite cerrar el código y volverlo propietario quitando las libertades a otros." },
-    { q: "Ofrecer la prestación de un servicio cuyo cumplimiento sea de dudoso o imposible cumplimiento es:", opts: ["Un deber del ingeniero.", "Una prohibición estipulada en la Ley 842.", "Un derecho adquirido.", "Una estrategia válida de marketing."], a: 1, exp: "El Art 40 prohíbe explícitamente prometer resultados técnicos imposibles o dudosos." },
-    { q: "¿Qué entidad en Colombia es la encargada de vigilar la Propiedad Industrial (Marcas y Patentes)?", opts: ["COPNIA", "Ministerio de Justicia", "Superintendencia de Industria y Comercio (SIC)", "Dirección Nacional de Derecho de Autor"], a: 2, exp: "La SIC administra y regula la propiedad industrial, mientras que la DNDA regula los derechos de autor." },
-    { q: "¿Qué significa el principio disciplinario de 'Imparcialidad'?", opts: ["Que el COPNIA debe fallar rápido.", "Que las decisiones deben basarse en evidencias objetivas sin favoritismos.", "Que la ley se aplica igual solo a ingenieros civiles.", "Que los recursos no pueden ser apelados."], a: 1, exp: "La imparcialidad garantiza juicios justos, objetivos y sin sesgos durante un proceso disciplinario." },
-    { q: "¿Qué valor profesional consiste en actuar correctamente incluso cuando nadie está observando?", opts: ["Prudencia", "Integridad", "Altruismo", "Solidaridad"], a: 1, exp: "La integridad es la coherencia entre los valores y las acciones, incluso en ausencia de supervisión." },
-    { q: "Los INCOTERMS (como FOB o CIF) son reglas usadas principalmente en:", opts: ["Derecho de Autor", "Comercio Internacional", "Registro del COPNIA", "Protección de Datos"], a: 1, exp: "Los INCOTERMS definen las responsabilidades de entrega en transacciones comerciales internacionales." }
+    {
+        q: "¿Qué entidad se encarga de inspeccionar, vigilar y llevar el registro profesional de los ingenieros en Colombia?",
+        opts: ["Ministerio de TIC", "COPNIA", "Superintendencia de Industria y Comercio", "Consejo de Estado"],
+        a: 1,
+        exp: "El Consejo Profesional Nacional de Ingeniería (COPNIA) es la entidad encargada por la Ley 842 de 2003 para estas funciones."
+    },
+    {
+        q: "La Ley 1581 de 2012 exige que, para tratar los datos personales de un usuario, la autorización debe ser:",
+        opts: ["Tácita y general.", "Previa, expresa e informada.", "Verbal y opcional.", "Asumida si no dice lo contrario."],
+        a: 1,
+        exp: "La autorización debe ser siempre previa, expresa (inequívoca) e informada (sabiendo para qué se usará)."
+    },
+    {
+        q: "¿Cuál derecho de autor es intransferible, no se puede vender y garantiza el reconocimiento del creador?",
+        opts: ["Derechos Patrimoniales", "Derechos Morales", "Derechos Conexos", "Patentes"],
+        a: 1,
+        exp: "Los Derechos Morales son inalienables, perpetuos e irrenunciables."
+    },
+    {
+        q: "La diferencia principal entre ética y moral es que:",
+        opts: ["La ética es práctica y la moral es teórica.", "La ética aplica en empresas y la moral en la familia.", "La ética es la reflexión filosófica teórica y la moral es el conjunto de normas prácticas.", "Son exactamente lo mismo legalmente."],
+        a: 2,
+        exp: "La ética estudia el 'por qué' (teórica) y la moral aplica el 'cómo' (práctica)."
+    },
+    {
+        q: "¿Qué protege la Ley 1581?",
+        opts: ["Datos personales", "Patentes", "Contratos", "Impuestos"],
+        a: 0,
+        exp: "La Ley 1581 regula protección de datos."
+    }
 ];
 
 const dynamicTips = [

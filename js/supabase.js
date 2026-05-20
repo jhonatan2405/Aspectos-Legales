@@ -50,3 +50,17 @@ async function loadRanking() {
 }
 window.saveToSupabase = saveToSupabase;
 window.loadRanking = loadRanking;
+
+async function getQuestionsFromSupabase() {
+    if(!window.supabaseClient) return [];
+    try {
+        const { data, error } = await window.supabaseClient.rpc('obtener_preguntas_aleatorias');
+        if(error) throw error;
+        return data;
+    } catch(e) {
+        console.error("Error fetching questions from Supabase, returning empty array", e);
+        return [];
+    }
+}
+window.getQuestionsFromSupabase = getQuestionsFromSupabase;
+

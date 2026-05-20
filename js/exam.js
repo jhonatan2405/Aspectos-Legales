@@ -2,10 +2,35 @@ let examIsActive = false, examQ = 0, examTime = 3600, examInt, examAns = [], che
 let currentExamData = [];
 
 function setupExamSystem() {
-    document.getElementById('btn-start-exam').addEventListener('click', () => {
+    document.getElementById('btn-start-exam').addEventListener('click', async () => {
         const name = document.getElementById('student-name').value.trim();
         if(!name) { alert('Ingresa tu nombre'); return; }
         
+        const btn = document.getElementById('btn-start-exam');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span>Cargando preguntas...</span>';
+
+        let questions = [];
+        if (window.getQuestionsFromSupabase) {
+            questions = await window.getQuestionsFromSupabase();
+        }
+
+        if (questions && questions.length > 0) {
+            currentExamData = questions;
+        } else {
+            console.warn("Falling back to local questions pool.");
+            currentExamData = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 20);
+        }
+
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+
+        if (currentExamData.length === 0) {
+            alert("No se pudieron cargar las preguntas del examen. Por favor, verifica tu conexión.");
+            return;
+        }
+
         try{ document.documentElement.requestFullscreen(); }catch(e){}
         
         examIsActive = true; cheatCount = 0; examQ = 0; examAns = []; examTime = 3600;
@@ -36,7 +61,6 @@ function setupExamSystem() {
             if(examTime <= 0) finishExam();
         }, 1000);
         
-        currentExamData = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 20);
         renderExamQ();
     });
 
